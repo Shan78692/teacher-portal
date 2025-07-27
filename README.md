@@ -35,7 +35,7 @@ This is a Django-based Teacher Portal application that allows teachers to manage
 ## 🛠️ Setup & Installation  ⚙️  
 ### 1️⃣ Clone Repository
 ```sh
-git clone git@github.com:Shan78692/teacher-portal.git # if you have zip file then skip git clone and follow next step
+https://github.com/Shan78692/teacher-portal.git # if you have zip file then skip git clone and follow next step
 
 
 cd teacher_portal
