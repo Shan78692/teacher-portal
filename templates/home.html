@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Teacher Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'portal_app/table_style.css' %}">
+</head>
+<body>
+<div id="dynamicAlertContainer" class="custom-alert-container"></div>
+
+<h2 class="user-text">Hello, {{request.user.first_name.capitalize}}!!</h2>
+{% if messages %}
+  <div class="custom-alert-container">
+    {% for message in messages %}
+      <div class="custom-alert {{ message.tags }}">
+        {{ message }}
+        <button type="button" class="close-alert" onclick="this.parentElement.style.display='none';">&times;</button>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<!-- Header Section -->
+<div class="table-header-actions">
+  <a href="/home/" class="btn-nav"><i class="fas fa-home"></i> Home</a>
+  <a href="{% url 'logout' %}" class="btn-nav logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+</div>
+<h1>Welcome to Teacher Portal!</h1>
+
+<!-- Student Table -->
+<h2>Student Details</h2>
+<button id="openModalBtn">+ Add Student</button>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Subject</th>
+      <th>Marks</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for student in students %}
+      <tr data-id="{{ student.id }}">
+        <td class="name" data-label="Name">{{student.name}}</td>
+        <td class="subject" data-label="Subject">{{student.subject}}</td>
+        <td class="marks" data-label="Marks">{{student.marks}}</td>
+        <td>
+          <button class="edit-btn"><i class="fas fa-pen"></i> Edit</button>
+          <button class="save-btn" style="display:none;"><i class="fas fa-save"></i> Save</button>
+          <button class="delete-btn delete"><i class="fas fa-trash"></i> Delete</button>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- Add Student Modal -->
+<div id="addModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeModal">&times;</span>
+    <h3>Add New Student</h3>
+    <form id="addStudentForm">
+      {% csrf_token %}
+      <input type="text" id="studentName" name="studentName" placeholder="Name" required>
+      <input type="text" id="studentSubject" name="studentSubject" placeholder="Subject" required>
+      <input type="number" id="studentMarks" name="studentMarks" placeholder="Marks" required>
+      <button type="submit">Add</button>
+    </form>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div id="deleteModal" class="custom-modal" style="display: none;">
+  <div class="custom-modal-content">
+    <p>Are you sure you want to delete this student?</p>
+    <div class="modal-actions">
+      <button id="confirmDeleteBtn" class="btn btn-danger">Yes, Delete</button>
+      <button id="cancelDeleteBtn" class="btn btn-secondary">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'portal_app/table_script.js' %}"></script>
+</body>
+</html>

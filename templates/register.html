@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="{% static 'portal_app/style.css' %}">
+</head>
+<body>
+{% if messages %}
+  <div class="custom-alert-container">
+    {% for message in messages %}
+      <div class="custom-alert {{ message.tags }}">
+        {{ message }}
+        <button type="button" class="close-alert" onclick="this.parentElement.style.display='none';">&times;</button>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+<div class="wrapper fadeInDown">
+    <div><h1>Teacher Portal</h1></div>    
+    <div id="formContent">
+    <h2 class="active"> Log In </h2>
+    <div class="fadeIn first">
+      <img src="https://static.vecteezy.com/system/resources/previews/008/302/513/non_2x/eps10-blue-user-icon-or-logo-in-simple-flat-trendy-modern-style-isolated-on-white-background-free-vector.jpg" id="icon" alt="User Icon" />
+    </div>
+    <form method="post" action="{% url 'register' %}">
+      {% csrf_token %}
+      <input type="text" id="first_name" class="fadeIn second" name="first_name" placeholder="First Name" required>
+      <input type="text" id="last_name" class="fadeIn second" name="last_name" placeholder="Last Name" required>
+      <input type="text" id="email" class="fadeIn second" name="email" placeholder="Email Address" required>
+      <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" required>
+      <input type="submit" class="fadeIn fourth" value="Submit">
+    </form>
+    <div id="formFooter">
+      <a class="underlineHover" href="{% url 'login' %}">Already Have an Account Log in</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
